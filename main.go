@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"piotrek813/dot/cmd"
 	"piotrek813/dot/config"
 )
 
@@ -12,8 +12,7 @@ import (
 // }
 
 func main() {
-	gc := config.New("config.toml")
+	config.New("config.toml")
 
-	fmt.Printf("gc: %v\n", gc)
-
+	cmd.Run()
 }
