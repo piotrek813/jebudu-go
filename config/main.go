@@ -53,8 +53,12 @@ func New() *GlobalConfig {
 
 		Gc.setUser()
 
-		fmt.Printf("Gc: %v\n", Gc)
+		Gc.Dump()
 	}
 
 	return Gc
+}
+
+func (gc *GlobalConfig) Dump() {
+	toml.NewEncoder(os.Stdout).Encode(Gc)
 }
