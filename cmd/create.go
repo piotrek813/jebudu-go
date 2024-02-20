@@ -7,15 +7,19 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var get *cli.Command = &cli.Command{
-	Name:      "get",
-	Args:      true,
-	ArgsUsage: "[jebud]",
+var create *cli.Command = &cli.Command{
+	Name:      "create",
 	Before:    validation.ArgsPresent,
+	ArgsUsage: "[name]",
 	Action: func(ctx *cli.Context) error {
 		n := ctx.Args().First()
+		err := jebud.Create(n)
 
-		jebud.Get(n).Install()
+		if err != nil {
+			return err
+		}
+
+		jebud.Edit(n)
 
 		return nil
 	},
