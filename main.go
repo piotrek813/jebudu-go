@@ -1,8 +1,8 @@
 package main
 
 import (
-	"piotrek813/dot/cmd"
-	"piotrek813/dot/config"
+	"piotrek813/jebudu/cmd"
+	"piotrek813/jebudu/config"
 )
 
 // type Config struct {

@@ -1,37 +1,37 @@
-package dot
+package jebud
 
 import (
 	"fmt"
 	"os"
 	"path"
-	"piotrek813/dot/config"
+	"piotrek813/jebudu/config"
 	"slices"
 
 	"github.com/BurntSushi/toml"
 )
 
-type Dot struct {
+type Jebud struct {
 	Name string
 }
 
-func (d *Dot) Install() {
-	fmt.Printf("installing %v", d.Name)
+func (j *Jebud) Install() {
+	fmt.Printf("installing %v", j.Name)
 }
 
-func Get(f string) *Dot {
-	var d Dot
+func Get(f string) *Jebud {
+	var j Jebud
 
 	if _, err := os.Stat(f); err != nil {
 		f = path.Join(config.Gc.DotsPath, f, "config.toml")
 	}
-	_, err := toml.DecodeFile(f, &d)
+	_, err := toml.DecodeFile(f, &j)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "err: %v\n", err)
 		return nil
 	}
 
-	return &d
+	return &j
 }
 
 func GetAll() ([]string, error) {

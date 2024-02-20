@@ -1,4 +1,4 @@
-module piotrek813/dot
+module piotrek813/jebudu
 
 go 1.22.0
 
