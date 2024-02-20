@@ -12,6 +12,7 @@ import (
 
 type Jebud struct {
 	Name string
+	Path string
 }
 
 func (j *Jebud) Install() {
@@ -20,9 +21,10 @@ func (j *Jebud) Install() {
 
 func Get(f string) *Jebud {
 	var j Jebud
+	p := path.Join(config.Gc.DotsPath, f)
 
 	if _, err := os.Stat(f); err != nil {
-		f = path.Join(config.Gc.DotsPath, f, "config.toml")
+		f = path.Join(p, "config.toml")
 	}
 	_, err := toml.DecodeFile(f, &j)
 
@@ -30,6 +32,8 @@ func Get(f string) *Jebud {
 		fmt.Fprintf(os.Stderr, "err: %v\n", err)
 		return nil
 	}
+
+	j.Path = p
 
 	return &j
 }

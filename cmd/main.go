@@ -10,7 +10,7 @@ import (
 func Run() {
 	app := &cli.App{Name: "dot", ArgsUsage: "[package]"}
 
-	(*app).Commands = []*cli.Command{list, get}
+	(*app).Commands = []*cli.Command{list, get, edit}
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)

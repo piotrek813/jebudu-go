@@ -17,6 +17,7 @@ type GlobalConfig struct {
 	BasePath string `toml:"base_path"`
 	DotsPath string `toml:"dots_path"`
 	User     *user.User
+	Editor   string
 }
 
 func (gc *GlobalConfig) setUser() {
@@ -37,7 +38,7 @@ func (gc *GlobalConfig) setPath() {
 
 var Gc *GlobalConfig
 
-func New(f string) *GlobalConfig {
+func New() *GlobalConfig {
 	if Gc == nil {
 		Gc = &GlobalConfig{}
 		Gc.setPath()

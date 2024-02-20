@@ -1,3 +1,4 @@
 app_image = "~/Applications"
 scope = "home"
 dots_path = "/home/p/code/dotfiles"
+editor = "nvim"
