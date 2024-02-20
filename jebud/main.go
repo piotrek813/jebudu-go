@@ -16,42 +16,12 @@ type Jebud struct {
 	// TODO todos not showing up in telescoe move to google todo
 	Name         string
 	Path         string
-	Dependencies []string
+	Dependencies []Dependency
 }
 
 func (j *Jebud) Install() {
+	j.Dump()
 	j.installDependencies()
-}
-
-func commandExists(cmd string) bool {
-	_, err := exec.LookPath(cmd)
-	return err == nil
-}
-
-func (j *Jebud) installDependencies() error {
-	ds := ""
-
-	for _, d := range j.Dependencies {
-		if commandExists(d) {
-			fmt.Printf("Skipping %v, already installed\n", d)
-			continue
-		}
-
-		ds += d + " "
-	}
-
-	if ds == "" {
-		return nil
-	}
-
-	// idk why this is the right way but okay
-	cmd := exec.Command("bash", "-c", "sudo apt install "+ds)
-
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	return cmd.Run()
 }
 
 func Get(f string) *Jebud {
@@ -124,4 +94,8 @@ func Edit(n string) error {
 	err := cmd.Run()
 
 	return err
+}
+
+func (j *Jebud) Dump() {
+	toml.NewEncoder(os.Stdout).Encode(j)
 }
