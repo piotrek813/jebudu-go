@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 	"piotrek813/jebudu/config"
 	"slices"
 
@@ -22,6 +23,40 @@ type Jebud struct {
 func (j *Jebud) Install() {
 	j.Dump()
 	j.installDependencies()
+	fmt.Printf("j.setupScripts(): %v\n", j.setupScripts())
+}
+
+func (j *Jebud) setupScripts() error {
+	if !j.doesSubmoduleExist("scripts") {
+		fmt.Printf("\"dupa\": %v\n", "dupa")
+		return nil
+	}
+
+	sp := filepath.Join(j.Path, "scripts")
+
+	scripts, err := os.ReadDir(sp)
+
+	if err != nil {
+		return err
+	}
+
+	for _, s := range scripts {
+		op := filepath.Join(sp, s.Name())
+		np := filepath.Join(config.Gc.ScriptsPath, s.Name())
+		err := os.Symlink(op, np)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+func (j *Jebud) doesSubmoduleExist(n string) bool {
+	p := path.Join(j.Path, n)
+	_, err := os.Stat(p)
+
+	return !os.IsNotExist(err)
 }
 
 func Get(f string) *Jebud {

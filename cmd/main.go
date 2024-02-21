@@ -8,7 +8,7 @@ import (
 )
 
 func Run() {
-	app := &cli.App{Name: "dot", ArgsUsage: "[package]"}
+	app := &cli.App{Name: "jebudu", ArgsUsage: "[package]"}
 
 	(*app).Commands = []*cli.Command{list, get, edit, create}
 

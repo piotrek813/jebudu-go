@@ -12,12 +12,13 @@ import (
 )
 
 type GlobalConfig struct {
-	Scope    string
-	AppImage string `toml:"app_image"`
-	BasePath string `toml:"base_path"`
-	DotsPath string `toml:"dots_path"`
-	User     *user.User
-	Editor   string
+	Scope       string
+	AppImage    string `toml:"app_image"`
+	BasePath    string `toml:"base_path"`
+	DotsPath    string `toml:"dots_path"`
+	ScriptsPath string `toml:"scripts_path"`
+	User        *user.User
+	Editor      string
 }
 
 func (gc *GlobalConfig) setUser() {
