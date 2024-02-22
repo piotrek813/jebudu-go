@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/user"
-	"path"
-	"runtime"
-	"strings"
 
 	"github.com/BurntSushi/toml"
 )
@@ -14,7 +11,6 @@ import (
 type GlobalConfig struct {
 	Scope       string
 	AppImage    string `toml:"app_image"`
-	BasePath    string `toml:"base_path"`
 	DotsPath    string `toml:"dots_path"`
 	ScriptsPath string `toml:"scripts_path"`
 	User        *user.User
@@ -31,21 +27,13 @@ func (gc *GlobalConfig) setUser() {
 	gc.User = u
 }
 
-func (gc *GlobalConfig) setPath() {
-	_, b, _, _ := runtime.Caller(0)
-	gc.BasePath = strings.TrimSuffix(b, "config/main.go")
-	gc.DotsPath = path.Join(gc.BasePath, "dots")
-}
-
 var Gc *GlobalConfig
 
 func New() *GlobalConfig {
 	if Gc == nil {
 		Gc = &GlobalConfig{}
-		Gc.setPath()
 
-		f := path.Join(Gc.BasePath, "config.toml")
-		_, err := toml.DecodeFile(f, Gc)
+		_, err := toml.DecodeFile("config.toml", Gc)
 
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "err: %v\n", err)
